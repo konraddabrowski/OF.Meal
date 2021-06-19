@@ -1,0 +1,19 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>net5.0</TargetFramework>
+  </PropertyGroup>
+
+    <ItemGroup>
+        <PackageReference Include="Arcaim.CQRS.Commands" Version="1.1.0" />
+        <PackageReference Include="Arcaim.CQRS.Queries" Version="1.0.0" />
+        <PackageReference Include="FluentValidation" Version="10.0.4" />
+    </ItemGroup>
+
+    <ItemGroup>
+        <ProjectReference Include="..\..\..\..\nuget\Arcaim.CQRS.WebApi\Arcaim.CQRS.WebApi.csproj" />
+        <ProjectReference Include="..\..\..\..\nuget\Arcaim.Assertor\Arcaim.Assertor.csproj" />
+        <ProjectReference Include="..\OF.Meal.Infrastructure\OF.Meal.Infrastructure.csproj" />
+    </ItemGroup>
+
+</Project>

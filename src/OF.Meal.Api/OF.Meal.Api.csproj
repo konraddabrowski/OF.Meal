@@ -1,0 +1,24 @@
+<Project Sdk="Microsoft.NET.Sdk.Web">
+
+  <PropertyGroup>
+    <TargetFramework>net5.0</TargetFramework>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Microsoft.Extensions.Caching.Memory" Version="5.0.0" />
+    <PackageReference Include="Microsoft.AspNetCore.Session" Version="2.2.0" />
+    <PackageReference Include="Arcaim.CQRS.Commands" Version="1.1.0" />
+    <PackageReference Include="Arcaim.CQRS.Queries" Version="1.0.0" />
+    <PackageReference Include="FluentValidation" Version="10.0.4" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\..\..\..\nuget\Arcaim.MyDapper\Arcaim.MyDapper.csproj" />
+    <ProjectReference Include="..\..\..\..\nuget\Arcaim.CQRS.WebApi\Arcaim.CQRS.WebApi.csproj" />
+    <ProjectReference Include="..\..\..\..\nuget\Arcaim.DI.Scanner\Arcaim.DI.Scanner.csproj" />
+    <ProjectReference Include="..\..\..\..\nuget\Arcaim.Assertor\Arcaim.Assertor.csproj" />
+    <ProjectReference Include="..\..\..\..\nuget\Arcaim.Exception\Arcaim.Exception.csproj" />
+    <ProjectReference Include="..\OF.Meal.Application\OF.Meal.Application.csproj" />
+  </ItemGroup>
+
+</Project>

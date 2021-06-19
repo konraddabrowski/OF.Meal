@@ -1,0 +1,39 @@
+@url = http://localhost:5000
+
+###
+POST {{url}}/auth/register
+Content-Type: application/json
+
+{
+    "email": "konrad.dabrowski@gmail.com",
+    "password": "Test1!2@",
+    "repeat": "Test1!2@"
+}
+
+###
+POST {{url}}/auth/login
+Content-Type: application/json
+
+{
+    "email": "konrad.dabrowski@gmail.com",
+    "password": "Test1!2@"
+}
+
+
+###
+POST {{url}}/auth/logout
+Content-Type: application/json
+Cookie: user_cookie=%7B%22Id%22%3A1%2C%22Value%22%3A%22cf59f21d-3cbe-4725-b203-2b7d23018642%22%7D; path=/,.AspNetCore.Session=CfDJ8MaTO5YtGBNBnhUH%2BKKM0wElvuDD%2BwtidUDjg9N3zG4i%2FDOKRLJqhgHCq%2FBaFjWJeSEI6%2FPm2mKbgplv5PR3A0H6iIdWBqG3Bb0xqawObJPUjJO0TINTXuOQocn54WB2QQ8g%2B6PAu0y3oVicSc9z0AeBuCZPyW42mZ7PGnhZDW5X; path=/; samesite=lax; httponly
+
+{
+    "email": "konrad.dabrowski@gmail.com",
+    "id": 1
+}
+
+###
+POST {{url}}/auth/refresh
+Content-Type: application/json
+Cookie: user_cookie=%7B%22Id%22%3A1%2C%22Value%22%3A%221e410ef1-b6a4-46df-9a0f-2dd087402aa2%22%7D; path=/
+
+{
+}
