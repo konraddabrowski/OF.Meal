@@ -14,6 +14,11 @@ using OF.Meal.Core.Settings;
 using OF.Meal.Infrastructure.Mappers;
 using Microsoft.Extensions.Configuration;
 using MySql.Data.MySqlClient;
+using OF.Meal.Application.Commands;
+using OF.Meal.Application.Queries;
+using OF.Meal.Core.Entities;
+using OF.Meal.Infrastructure.Repositories;
+using OF.Meal.Core.Repositories;
 
 namespace OF.Meal.Api
 {
@@ -45,7 +50,7 @@ namespace OF.Meal.Api
                         
                         return new MySqlConnection(connectionString);
                     })
-                    // .AddScoped<IUserRepository, UserRepository>()
+                    .AddScoped<IMealRepository, MealRepository>()
                     .AddDistributedMemoryCache()
                     .AddSession(options =>
                     {
@@ -65,12 +70,12 @@ namespace OF.Meal.Api
                         .UseSession()
                         .UseEndpoints(endpoints =>
                         {
-                            // endpoints.Controller("auth", (api, act) => act
-                            //     .Command(nameof(Register), () => api.Post<Register>())
-                            //     .Command(nameof(Login), () => api.Post<Login>())
-                            //     .Command(nameof(Refresh), () => api.Post<Refresh>())
-                            //     .Command(nameof(Logout), () => api.Post<Logout>())
-                            //     .Query(nameof(Authorize), () => api.Get<Authorize, AuthorizeDto>()));
+                            endpoints.Controller("meal", (api, act) => act
+                                .Command(nameof(AddMeal), () => api.Post<AddMeal>())
+                                .Command(nameof(UpdateMeal), () => api.Put<UpdateMeal>())
+                                .Command(nameof(DeleteMeal), () => api.Delete<DeleteMeal>())
+                                .Query(nameof(GetMeal), () => api.Get<GetMeal, OF.Meal.Core.Entities.Meal>())
+                                .Query(nameof(GetMeals), () => api.Get<GetMeals, Meals>()));
                         })
                     )
                 );
