@@ -8,11 +8,13 @@
     <PackageReference Include="Dapper" Version="2.0.90" />
     <PackageReference Include="MySql.Data" Version="8.0.25" />
     <PackageReference Include="System.Data.SqlClient" Version="4.8.2" />
+    <PackageReference Include="Utf8Json" Version="1.3.7" />
   </ItemGroup>
 
   <ItemGroup>
     <ProjectReference Include="..\OF.Meal.Core\OF.Meal.Core.csproj" />
     <ProjectReference Include="..\..\..\..\nuget\Arcaim.MyDapper\Arcaim.MyDapper.csproj" />
+    <ProjectReference Include="..\..\..\..\nuget\Arcaim.CQRS.WebApi\Arcaim.CQRS.WebApi.csproj" />
     <ProjectReference Include="..\..\..\..\nuget\Arcaim.Exception\Arcaim.Exception.csproj" />
     <ProjectReference Include="..\..\..\..\nuget\Arcaim.Assertor\Arcaim.Assertor.csproj" />
   </ItemGroup>

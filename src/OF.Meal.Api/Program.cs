@@ -19,6 +19,9 @@ using OF.Meal.Application.Queries;
 using OF.Meal.Core.Entities;
 using OF.Meal.Infrastructure.Repositories;
 using OF.Meal.Core.Repositories;
+using System.Data;
+using OF.Meal.Infrastructure.Services;
+using Arcaim.CQRS.WebApi.Interfaces;
 
 namespace OF.Meal.Api
 {
@@ -40,27 +43,25 @@ namespace OF.Meal.Api
                     .AddSingleton<IAppSettings, AppSettings>()
                     .AddTransient<ErrorHandlerMiddleware>()
                     .AddSingleton<IExceptionToResponseMapper, ExceptionToResponseMapper>()
-                    
-                    .AddMyDapper(() => 
-                    {
-                        var connectionString = hostContext.Configuration
-                            .GetSection(ConnectionStringsSetting.ConnectionStrings)
-                            .Get<ConnectionStringsSetting>()
+                    .AddMyDapper(serviceProvider => {
+                        var connection = serviceProvider
+                            .GetRequiredService<IAppSettings>()
+                            .ConnectionStrings
                             .DefaultConnection;
                         
-                        return new MySqlConnection(connectionString);
+                        return new MySqlConnection(connection);
                     })
                     .AddScoped<IMealRepository, MealRepository>()
                     .AddDistributedMemoryCache()
                     .AddSession(options =>
                     {
-                        var session = hostContext.Configuration.GetSection(SessionSetting.Session).Get<SessionSetting>();
-                        var cookie = hostContext.Configuration.GetSection(CookieSetting.Cookie).Get<CookieSetting>();
+                        var session = hostContext.Configuration
+                            .GetSection(SessionSetting.Session)
+                            .Get<SessionSetting>();
                      
-                        options.IdleTimeout = TimeSpan.FromMinutes(session.IdleTimeout);
-                        options.Cookie.HttpOnly = cookie.HttpOnly;
-                        options.Cookie.IsEssential = cookie.IsEssential;
+                        options.IdleTimeout = TimeSpan.FromSeconds(session.IdleTimeout);
                     })
+                    .AddScoped<IAuthorization, Authorization>()
                     .AddWebApi()
                     .AddAssertor())
                 .ConfigureWebHostDefaults(webBuilder =>
@@ -71,7 +72,8 @@ namespace OF.Meal.Api
                         .UseEndpoints(endpoints =>
                         {
                             endpoints.Controller("meal", (api, act) => act
-                                .Command(nameof(AddMeal), () => api.Post<AddMeal>())
+                                .Command(() => api.Post<AddMeal>())
+                                // .Command(nameof(AddMeal), () => api.Post<AddMeal>())
                                 .Command(nameof(UpdateMeal), () => api.Put<UpdateMeal>())
                                 .Command(nameof(DeleteMeal), () => api.Delete<DeleteMeal>())
                                 .Query(nameof(GetMeal), () => api.Get<GetMeal, OF.Meal.Core.Entities.Meal>())

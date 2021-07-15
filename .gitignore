@@ -1,2 +1,6 @@
 src/*/bin/**
 src/*/obj/**
+
+src/*/appsettings*
+
+OF.Meal.rest
